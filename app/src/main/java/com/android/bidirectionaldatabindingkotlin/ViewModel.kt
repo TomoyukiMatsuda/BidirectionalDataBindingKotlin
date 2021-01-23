@@ -12,8 +12,6 @@ class ViewModel : BaseObservable() {
             // fieldはformTextのこと
             // フォーム入力内容がformTextにセットされる
             field = value
-            // View側にformTextの変更を通知
-            notifyPropertyChanged(BR.formText)
             // View側にbuttonEnableの変更を通知(isButtonEnable()を呼ぶ)
             notifyPropertyChanged(BR.buttonEnable)
         }
