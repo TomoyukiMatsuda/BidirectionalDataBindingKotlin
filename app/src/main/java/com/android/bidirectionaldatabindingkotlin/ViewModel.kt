@@ -1,4 +1,8 @@
 package com.android.bidirectionaldatabindingkotlin
 
-class ViewModel {
+import androidx.databinding.BaseObservable
+
+class ViewModel : BaseObservable() {
+    // ここにロジックを書いていく
+
 }
