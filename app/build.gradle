@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt' // ←ここに追加
 }
 
 android {
@@ -28,13 +29,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    // ここに記述を追加
-    dataBinding {
-        enabled = true
-    }
-
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    // ここに記述を追加
+    buildFeatures {
+        dataBinding = true
     }
 }
 
