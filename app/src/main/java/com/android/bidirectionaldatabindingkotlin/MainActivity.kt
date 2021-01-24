@@ -8,6 +8,7 @@ import com.android.bidirectionaldatabindingkotlin.databinding.ActivityMainBindin
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        title = "双方向データバインディング Kotlin"
 
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.viewModel = ViewModel()
