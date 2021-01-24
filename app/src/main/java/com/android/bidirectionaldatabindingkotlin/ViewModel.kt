@@ -4,6 +4,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 
 class ViewModel : BaseObservable() {
+    private var clickText: String = "ボタンクリックでここに表示"
 
     // これでフォーム入力内容(formText)の getterとsetter が同時にセットできる
     @get:Bindable
@@ -12,18 +13,40 @@ class ViewModel : BaseObservable() {
             // fieldはformTextのこと
             // フォーム入力内容がformTextにセットされる
             field = value
-            // View側にformTextの変更を通知
-            notifyPropertyChanged(BR.formText)
+            // View側にrealTimeTextの変更を通知(getRealTimeText()を呼ぶ)
+            notifyPropertyChanged(BR.realTimeText)
             // View側にbuttonEnableの変更を通知(isButtonEnable()を呼ぶ)
             notifyPropertyChanged(BR.buttonEnable)
         }
 
-    // formTextの値の有無によってボタン活性・非活性のフラグを返す
+    // ボタンクリック時に表示するテキスト(TextView)の getter
+    @Bindable fun getClickText(): String {
+        return clickText
+    }
+
+    // フォーム入力内容をフォーム下のTextViewに反映する getter
+    @Bindable fun getRealTimeText(): String {
+        // return formText でも良いがわかりやすく一旦変数に代入してから return している
+        val realTimeText = formText
+        return realTimeText
+    }
+
+    // フォーム（EditText）へのテキスト入力有無で、ボタン活性・非活性を制御するフラグの getter
     @Bindable fun isButtonEnable(): Boolean {
+        // 入力あり:true  入力なし：false
         return !formText.isNullOrBlank()
     }
 
-    // これだとボタンに活性・非活性が通知されなかった。なんでだろう？
-    // @get:Bindable
-    // var buttonEnable: Boolean = !formText.isNullOrBlank()
+    // ボタンクリックイベント
+    fun onButtonClick() {
+        // clickTextにフォーム入力テキストをセット
+        clickText = formText
+        // formTextを初期化
+        formText = ""
+        // 変更を通知
+        // この記述でgetClickText()が呼ばれる
+        notifyPropertyChanged(BR.clickText)
+        // この記述でgetFormText()が呼ばれる
+        notifyPropertyChanged(BR.formText)
+    }
 }
